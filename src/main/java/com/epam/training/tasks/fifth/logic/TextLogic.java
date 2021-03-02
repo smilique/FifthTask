@@ -3,12 +3,16 @@ package com.epam.training.tasks.fifth.logic;
 import com.epam.training.tasks.fifth.entities.Component;
 import com.epam.training.tasks.fifth.entities.Composite;
 import com.epam.training.tasks.fifth.entities.Lexeme;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
 public class TextLogic {
 
+    private final static Logger LOGGER = Logger.getLogger(TextLogic.class);
+
     private Composite sortComposite(Composite composite) {
+
         List<Component> components = composite.get();
 
         components.sort((first, second) -> {
@@ -16,6 +20,9 @@ public class TextLogic {
             List<Component> secondComponent = ((Composite) second).get();
             int firstComponentSize = firstComponent.size();
             int secondComponentSize = secondComponent.size();
+            LOGGER.debug(firstComponentSize);
+            LOGGER.debug(secondComponentSize);
+            LOGGER.debug("Difference " + (firstComponentSize - secondComponentSize));
 
             return firstComponentSize - secondComponentSize;
         });
@@ -56,7 +63,7 @@ public class TextLogic {
         return result;
     }
 
-    public Component calculate(Component component) {
+    public Lexeme calculate(Component component) {
         String expression = ((Lexeme) component).get();
         Calculator calculator = new Calculator(expression);
         String calculated = calculator.calculate();

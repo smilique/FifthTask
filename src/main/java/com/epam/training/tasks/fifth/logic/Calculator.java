@@ -16,7 +16,7 @@ public class Calculator {
     }
 
     private void parse(String expression) {
-        for (String element : expression.split("\\p{Blank}+")) {
+        for (String element : expression.split("\\[*]\\p{Blank}+")) {
             if (element.isEmpty()) {
                 continue;
             }
