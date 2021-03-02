@@ -5,18 +5,16 @@ import com.epam.training.tasks.fifth.entities.Composite;
 import com.epam.training.tasks.fifth.entities.Lexeme;
 import org.apache.log4j.Logger;
 
-import java.util.Arrays;
-
-import static com.epam.training.tasks.fifth.entities.LexemeType.EXPRESSION;
-import static com.epam.training.tasks.fifth.entities.LexemeType.WORD;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class SentenceParser extends AbstractParser{
 
     private final static Logger LOGGER = Logger.getLogger(SentenceParser.class);
-    private final static String LEXEME_SPLITTER = "\\s";
-    private final static String EXPRESSION_START = "[";
-    private final static String EXPRESSION_END = "]";
+    private final static String EXPRESSION_REGEX = "\\[.*?]";
+    private final static String WORD_REGEX = "\\S*";
+    private final static String LEXEME_REGEX = "(" + EXPRESSION_REGEX + ")|(" + WORD_REGEX + ")";
 
     public SentenceParser(){
     }
@@ -24,23 +22,26 @@ public class SentenceParser extends AbstractParser{
     public Component parse(String inputText) {
         LOGGER.info("Getting Lexemes from: " + inputText);
 
-        String[] lexemes = inputText.split(LEXEME_SPLITTER);
-        LOGGER.info("Parsing input: " + inputText);
+        Pattern lexemePattern = Pattern.compile(LEXEME_REGEX);
+        Matcher lexemeMatcher = lexemePattern.matcher(inputText);
         Composite text = new Composite();
 
-        Arrays.stream(lexemes).forEach(lexeme -> {
-            LOGGER.debug("Lexeme [" + lexeme + "] found");
+        while (lexemeMatcher.find()) {
             Lexeme component;
-            if (lexeme.startsWith(EXPRESSION_START)
-                    & lexeme.endsWith(EXPRESSION_END)) {
-                LOGGER.info("Expression Lexeme found!");
-                component = Lexeme.expression(lexeme);
-            } else {
-                LOGGER.info("Word Lexeme found!");
-                component = Lexeme.word(lexeme);
+            String currentLexeme = lexemeMatcher.group();
+            if (!currentLexeme.isEmpty()) {
+                Pattern expressionPattern = Pattern.compile(EXPRESSION_REGEX);
+                Matcher expressionMatcher = expressionPattern.matcher(currentLexeme);
+                if (expressionMatcher.matches()) {
+                    LOGGER.info("Expression found: " + currentLexeme);
+                    component = Lexeme.expression(currentLexeme);
+                } else {
+                    LOGGER.debug("Word found: " + currentLexeme);
+                    component = Lexeme.word(currentLexeme);
+                }
+                text.add(component);
             }
-            text.add(component);
-        });
+        }
 
         return text;
     }

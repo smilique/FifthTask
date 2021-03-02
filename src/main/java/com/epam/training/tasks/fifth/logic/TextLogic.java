@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TextLogic {
 
-    public Composite sortComposite(Composite composite) {
+    private Composite sortComposite(Composite composite) {
         List<Component> components = composite.get();
 
         components.sort((first, second) -> {
