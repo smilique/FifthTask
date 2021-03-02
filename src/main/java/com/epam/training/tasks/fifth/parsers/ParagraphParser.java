@@ -16,14 +16,23 @@ public class ParagraphParser extends AbstractParser{
 
     public Component parse(String inputText) {
 
+        LOGGER.info("Getting Sentences from: " + inputText);
         String[] sentences = inputText.split(SENTENCE_SPLITTER);
 
         Composite text = new Composite();
 
         Arrays.stream(sentences).forEach(sentence -> {
-            LOGGER.info("Sentence found!");
+
+            LOGGER.info("Sentence [" + sentence + "] found!");
+
+            //LOGGER.debug("Successor: " + getSuccessor().parse("Second Sentence!"));
+
             Component component = getSuccessor().parse(sentence);
             text.add(component);
+
+            LOGGER.debug(component);
+            LOGGER.debug(text);
+
         });
 
 

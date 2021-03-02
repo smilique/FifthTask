@@ -22,20 +22,22 @@ public class SentenceParser extends AbstractParser{
     }
 
     public Component parse(String inputText) {
-        String[] lexemes = inputText.split(LEXEME_SPLITTER);
+        LOGGER.info("Getting Lexemes from: " + inputText);
 
+        String[] lexemes = inputText.split(LEXEME_SPLITTER);
+        LOGGER.info("Parsing input: " + inputText);
         Composite text = new Composite();
 
         Arrays.stream(lexemes).forEach(lexeme -> {
+            LOGGER.debug("Lexeme [" + lexeme + "] found");
             Lexeme component;
             if (lexeme.startsWith(EXPRESSION_START)
                     & lexeme.endsWith(EXPRESSION_END)) {
                 LOGGER.info("Expression Lexeme found!");
-                //calculate exception here
-                component = new Lexeme(lexeme, EXPRESSION);
+                component = Lexeme.expression(lexeme);
             } else {
                 LOGGER.info("Word Lexeme found!");
-                component = new Lexeme(lexeme, WORD);
+                component = Lexeme.word(lexeme);
             }
             text.add(component);
         });

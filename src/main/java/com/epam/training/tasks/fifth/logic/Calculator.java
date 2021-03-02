@@ -1,69 +1,66 @@
 package com.epam.training.tasks.fifth.logic;
 
-import com.epam.training.tasks.fifth.entities.Lexeme;
 import org.apache.log4j.Logger;
 
-import java.util.Stack;
-
-import static com.epam.training.tasks.fifth.entities.LexemeType.EXPRESSION;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Calculator {
-    //2 ^ 3 / 5 * 7 + 10 - 3
-    //is
-    //2 3 ^ 5 / 7 * 10 + 3 -
-    //8 5 / 7 * 10 + 3 -
-    //1.6 7 * 10 + 3 -
-    //11.2 10 + 3 -
-    //21.2 3 -
-    //18.2
-
     private final static Logger LOGGER = Logger.getLogger(Calculator.class);
-    private final static String SPLITTER = " ";
-    private final static String DIVISION = "/";
-    private final static String MULTIPLICATION = "*";
-    private final static String SUMMATION = "+";
-    private final static String SUBTRACTION = "-";
-    private final static String EXPONENTIATION = "^";
+    //2 3 ^ 5 / 7 * 10 + 3 -
+    private final ArrayList<AbstractMathExpression> listExpression;
 
-    public Lexeme calculate(Lexeme lexeme) {
-
-        String[] data = lexeme.get().split(SPLITTER);
-        Stack<String> elements = new Stack<>();
-
-        for (int i = data.length-1; i > 1; i--) {
-            elements.add(data[i]);
-        }
-
-        while (elements.size() != 1) {
-            double firstNumber = Double.parseDouble(elements.pop());
-            double secondNumber = Double.parseDouble(elements.pop());
-            String operand = elements.pop();
-            elements.add(proceed(firstNumber, secondNumber, operand));
-        }
-        return new Lexeme(elements.pop(),EXPRESSION);
+    public Calculator(String expression) {
+        listExpression = new ArrayList<>();
+        parse(expression);
     }
 
-    private String proceed(double firstNumber, double secondNumber, String operand) {
-        switch (operand) {
-            case DIVISION: {
-                return Double.toString(firstNumber / secondNumber);
+    private void parse(String expression) {
+        for (String element : expression.split("\\p{Blank}+")) {
+            if (element.isEmpty()) {
+                continue;
             }
-            case MULTIPLICATION: {
-                return Double.toString(firstNumber * secondNumber);
-            }
-            case SUMMATION: {
-                return Double.toString(firstNumber + secondNumber);
-            }
-            case SUBTRACTION: {
-                return Double.toString(firstNumber - secondNumber);
-            }
-            case EXPONENTIATION: {
-                double result = Math.pow(firstNumber, secondNumber);
-                return Double.toString(result);
-            }
-            default: {
-                //IllegalOperandException
+
+            LOGGER.debug(element + " element found");
+            char temp = element.charAt(0);
+            switch (temp) {
+                case '+' : {
+                    listExpression.add(new TerminalExpressionPlus());
+                    break;
+                }
+                case '-' : {
+                    listExpression.add(new TerminalExpressionMinus());
+                    break;
+                }
+                case '*' : {
+                    listExpression.add(new TerminalExpressionMultiply());
+                    break;
+                }
+                case '/' : {
+                    listExpression.add(new TerminalExpressionDivide());
+                    break;
+                }
+                case '^' : {
+                    listExpression.add(new TerminalExpressionExponent());
+                    break;
+                }
+                default:
+                    Scanner scanner = new Scanner(element);
+                    if (scanner.hasNextDouble()) {
+                        listExpression.add(
+                                new NonTerminalExpressionNumber(scanner.nextDouble()));
+                    }
             }
         }
+    }
+
+    public String calculate() {
+        Context context = new Context();
+        for (AbstractMathExpression terminal : listExpression) {
+            terminal.interpret(context);
+        }
+        Number result = context.popValue();
+
+        return result.toString();
     }
 }

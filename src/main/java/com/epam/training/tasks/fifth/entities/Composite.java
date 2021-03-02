@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Composite implements Component{
+public class Composite implements Component {
 
     private List<Component> data = new ArrayList<>();
 
@@ -19,9 +19,7 @@ public class Composite implements Component{
 
     @Override
     public String toString() {
-        return "Composite{" +
-                "data=" + data +
-                '}';
+        return data.toString();
     }
 
     @Override

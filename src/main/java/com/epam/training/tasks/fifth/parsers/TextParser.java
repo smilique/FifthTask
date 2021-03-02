@@ -17,13 +17,14 @@ public class TextParser extends AbstractParser {
     }
 
     public Component parse(String inputText) {
+        LOGGER.info("Getting Paragraphs from: " + inputText);
 
         String[] paragraphs = inputText.split(PARAGRAPH_SPLITTER);
 
         Composite text = new Composite();
 
         Arrays.stream(paragraphs).forEach(paragraph -> {
-            LOGGER.info("Paragraph found!");
+            LOGGER.info("Paragraph [" + paragraph + "] found");
             Component component = getSuccessor().parse(paragraph);
             text.add(component);
         });
