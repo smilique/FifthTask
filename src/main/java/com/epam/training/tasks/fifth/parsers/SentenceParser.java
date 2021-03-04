@@ -14,15 +14,20 @@ public class SentenceParser extends AbstractParser{
     private final static Logger LOGGER = Logger.getLogger(SentenceParser.class);
     private final static String EXPRESSION_REGEX = "\\[.*?]";
     private final static String WORD_REGEX = "\\S*";
-    private final static String LEXEME_REGEX = "(" + EXPRESSION_REGEX + ")|(" + WORD_REGEX + ")";
+    private final static String LEXEME_SPLITTER = "(" + EXPRESSION_REGEX + ")|(" + WORD_REGEX + ")";
 
     public SentenceParser(){
+    }
+
+    @Override
+    protected String getSplitter() {
+        return LEXEME_SPLITTER;
     }
 
     public Component parse(String inputText) {
         LOGGER.info("Getting Lexemes from: " + inputText);
 
-        Pattern lexemePattern = Pattern.compile(LEXEME_REGEX);
+        Pattern lexemePattern = Pattern.compile(LEXEME_SPLITTER);
         Matcher lexemeMatcher = lexemePattern.matcher(inputText);
         Composite text = new Composite();
 

@@ -23,7 +23,7 @@ public class TextParserTest {
 
     private final String firstInput = first + " " + second + ". " + third + " " + fourth + ".";
     private final String secondInput = fifth + " " + sixth + ". " + seventh + " " + eights + ".";
-    private final String textInput = firstInput + "\n" + secondInput;
+    private final String textInput = firstInput + "\n" + secondInput + "\n";
 
     @Test
     public void testTextParser() {
@@ -60,6 +60,9 @@ public class TextParserTest {
         expected.add(firstParagraph);
         expected.add(secondParagraph);
 
+        System.out.println(firstInput);
+        System.out.println(secondInput);
+        System.out.println(textInput);
         ParagraphParser paragraphParser = Mockito.mock(ParagraphParser.class);
         when(paragraphParser.parse(firstInput)).thenReturn(firstParagraph);
         when(paragraphParser.parse(secondInput)).thenReturn(secondParagraph);

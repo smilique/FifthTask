@@ -20,7 +20,6 @@ public class Calculator {
             if (element.isEmpty()) {
                 continue;
             }
-
             LOGGER.debug(element + " element found");
             char temp = element.charAt(0);
             switch (temp) {
