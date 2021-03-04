@@ -23,7 +23,7 @@ public class TextParserTest {
 
     private final String firstInput = first + " " + second + ". " + third + " " + fourth + ".";
     private final String secondInput = fifth + " " + sixth + ". " + seventh + " " + eights + ".";
-    private final String textInput = firstInput + "\n" + secondInput + "\n";
+    private final String paragraphs = firstInput + "\n" + secondInput + "\n";
 
     @Test
     public void testTextParser() {
@@ -59,17 +59,14 @@ public class TextParserTest {
         Component expected = new Composite();
         expected.add(firstParagraph);
         expected.add(secondParagraph);
-
-        System.out.println(firstInput);
-        System.out.println(secondInput);
-        System.out.println(textInput);
+        
         ParagraphParser paragraphParser = Mockito.mock(ParagraphParser.class);
         when(paragraphParser.parse(firstInput)).thenReturn(firstParagraph);
         when(paragraphParser.parse(secondInput)).thenReturn(secondParagraph);
 
-        TextParser textParser = new TextParser(paragraphParser);
+        TextParser parser = new TextParser(paragraphParser);
         //when
-        Component actual = textParser.parse(textInput);
+        Component actual = parser.parse(paragraphs);
         //then
         Assert.assertEquals(expected,actual);
     }

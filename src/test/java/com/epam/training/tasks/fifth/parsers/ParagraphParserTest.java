@@ -7,10 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.Arrays;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class ParagraphParserTest {
@@ -41,7 +37,6 @@ public class ParagraphParserTest {
         //when
         Component actual = parser.parse(sentences);
 
-        //System.out.println(parser.parse(sentences));
         //then
         Assert.assertEquals(expected,actual);
 

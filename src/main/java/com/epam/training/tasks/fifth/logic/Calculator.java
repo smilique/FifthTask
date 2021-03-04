@@ -17,38 +17,37 @@ public class Calculator {
 
     private void parse(String expression) {
         for (String element : expression.split("\\[*]\\p{Blank}+")) {
-            if (element.isEmpty()) {
-                continue;
-            }
-            LOGGER.debug(element + " element found");
-            char temp = element.charAt(0);
-            switch (temp) {
-                case '+' : {
-                    listExpression.add(new TerminalExpressionPlus());
-                    break;
-                }
-                case '-' : {
-                    listExpression.add(new TerminalExpressionMinus());
-                    break;
-                }
-                case '*' : {
-                    listExpression.add(new TerminalExpressionMultiply());
-                    break;
-                }
-                case '/' : {
-                    listExpression.add(new TerminalExpressionDivide());
-                    break;
-                }
-                case '^' : {
-                    listExpression.add(new TerminalExpressionExponent());
-                    break;
-                }
-                default:
-                    Scanner scanner = new Scanner(element);
-                    if (scanner.hasNextDouble()) {
-                        listExpression.add(
-                                new NonTerminalExpressionNumber(scanner.nextDouble()));
+            if (!element.isEmpty()) {
+                LOGGER.debug(element + " element found");
+                char temp = element.charAt(0);
+                switch (temp) {
+                    case '+': {
+                        listExpression.add(new TerminalExpressionPlus());
+                        break;
                     }
+                    case '-': {
+                        listExpression.add(new TerminalExpressionMinus());
+                        break;
+                    }
+                    case '*': {
+                        listExpression.add(new TerminalExpressionMultiply());
+                        break;
+                    }
+                    case '/': {
+                        listExpression.add(new TerminalExpressionDivide());
+                        break;
+                    }
+                    case '^': {
+                        listExpression.add(new TerminalExpressionExponent());
+                        break;
+                    }
+                    default:
+                        Scanner scanner = new Scanner(element);
+                        if (scanner.hasNextDouble()) {
+                            listExpression.add(
+                                    new NonTerminalExpressionNumber(scanner.nextDouble()));
+                        }
+                }
             }
         }
     }

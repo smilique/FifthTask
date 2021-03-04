@@ -1,19 +1,22 @@
 package com.epam.training.tasks.fifth.parsers;
 
-import java.util.regex.Pattern;
+import com.epam.training.tasks.fifth.entities.Component;
 
-public class ParagraphParser extends AbstractParser{
+public class ParagraphParser extends AbstractParser {
 
-    private final static String SENTENCE_SPLITTER = "([.!?])"; //incorrect
+    private final static String SENTENCE_SPLITTER = "([.!?])";
 
-    //Pattern pattern = Pattern.compile(SENTENCE_SPLITTER);
     public ParagraphParser(Parser successor) {
         super(successor);
     }
 
+    @Override
     public String getSplitter() {
-
         return SENTENCE_SPLITTER;
     }
 
+    @Override
+    public Component parse(String inputText) {
+        return super.parse(inputText);
+    }
 }

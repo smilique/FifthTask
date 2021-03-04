@@ -16,20 +16,18 @@ public class SentenceParser extends AbstractParser{
     private final static String WORD_REGEX = "\\S*";
     private final static String LEXEME_SPLITTER = "(" + EXPRESSION_REGEX + ")|(" + WORD_REGEX + ")";
 
-    public SentenceParser(){
-    }
-
     @Override
     protected String getSplitter() {
         return LEXEME_SPLITTER;
     }
 
     public Component parse(String inputText) {
-        LOGGER.info("Getting Lexemes from: " + inputText);
 
         Pattern lexemePattern = Pattern.compile(LEXEME_SPLITTER);
         Matcher lexemeMatcher = lexemePattern.matcher(inputText);
         Composite text = new Composite();
+
+        LOGGER.debug("Getting Lexemes from: " + inputText);
 
         while (lexemeMatcher.find()) {
             Lexeme component;
@@ -38,7 +36,7 @@ public class SentenceParser extends AbstractParser{
                 Pattern expressionPattern = Pattern.compile(EXPRESSION_REGEX);
                 Matcher expressionMatcher = expressionPattern.matcher(currentLexeme);
                 if (expressionMatcher.matches()) {
-                    LOGGER.info("Expression found: " + currentLexeme);
+                    LOGGER.debug("Expression found: " + currentLexeme);
                     component = Lexeme.expression(currentLexeme);
                 } else {
                     LOGGER.debug("Word found: " + currentLexeme);

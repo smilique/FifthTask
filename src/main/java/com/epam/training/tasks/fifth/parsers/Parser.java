@@ -5,6 +5,6 @@ import com.epam.training.tasks.fifth.entities.Component;
 
 public interface Parser {
 
-    public Component parse(String text);
+    Component parse(String text);
 
 }
