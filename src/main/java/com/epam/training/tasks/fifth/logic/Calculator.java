@@ -7,8 +7,12 @@ import java.util.Scanner;
 
 public class Calculator {
     private final static Logger LOGGER = Logger.getLogger(Calculator.class);
-    //2 3 ^ 5 / 7 * 10 + 3 -
     private final ArrayList<AbstractMathExpression> listExpression;
+    private final static char PLUS = '+';
+    private final static char MINUS = '-';
+    private final static char MULTIPLY = '*';
+    private final static char DIVIDE = '/';
+    private final static char EXPONENT = '^';
 
     public Calculator(String expression) {
         listExpression = new ArrayList<>();
@@ -16,28 +20,28 @@ public class Calculator {
     }
 
     private void parse(String expression) {
-        for (String element : expression.split("\\[*]\\p{Blank}+")) {
+        for (String element : expression.split("\\p{Blank}+")) {
             if (!element.isEmpty()) {
                 LOGGER.debug(element + " element found");
                 char temp = element.charAt(0);
                 switch (temp) {
-                    case '+': {
+                    case PLUS: {
                         listExpression.add(new TerminalExpressionPlus());
                         break;
                     }
-                    case '-': {
+                    case MINUS: {
                         listExpression.add(new TerminalExpressionMinus());
                         break;
                     }
-                    case '*': {
+                    case MULTIPLY: {
                         listExpression.add(new TerminalExpressionMultiply());
                         break;
                     }
-                    case '/': {
+                    case DIVIDE: {
                         listExpression.add(new TerminalExpressionDivide());
                         break;
                     }
-                    case '^': {
+                    case EXPONENT: {
                         listExpression.add(new TerminalExpressionExponent());
                         break;
                     }

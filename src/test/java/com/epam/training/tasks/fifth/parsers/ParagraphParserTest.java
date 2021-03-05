@@ -15,7 +15,7 @@ public class ParagraphParserTest {
     private final String sentences = firstSentence + "." + secondSentence;
 
     @Test
-    public void testParagraphParserTest() {
+    public void testParagraphParserShouldParseSentencesWhenParagraphSubmitted() {
         //given
         Composite firstParagraph = new Composite();
         firstParagraph.add(Lexeme.word("First"));

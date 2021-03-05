@@ -12,11 +12,9 @@ public class Lexeme implements Component{
 
     @Override
     public void add(Component component) {
-
     }
 
     public Lexeme() {
-
     }
 
     private Lexeme(String content, LexemeType type) {
@@ -34,10 +32,6 @@ public class Lexeme implements Component{
 
     public String get() {
         return content;
-    }
-
-    public LexemeType getType() {
-        return type;
     }
 
     @Override

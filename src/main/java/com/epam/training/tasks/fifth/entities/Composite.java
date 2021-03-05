@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Composite implements Component {
 
-    private List<Component> data = new ArrayList<>();
+    private final List<Component> data = new ArrayList<>();
 
     public void add(Component component) {
         data.add(component);

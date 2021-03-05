@@ -26,7 +26,7 @@ public class TextParserTest {
     private final String paragraphs = firstInput + "\n" + secondInput + "\n";
 
     @Test
-    public void testTextParser() {
+    public void testTextParserShouldParseParagraphsWhenTextSubmitted() {
         //given
         Component firstSentence = new Composite();
         firstSentence.add(

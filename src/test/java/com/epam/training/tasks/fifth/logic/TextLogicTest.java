@@ -47,7 +47,7 @@ public class TextLogicTest {
     }
 
     @Test
-    public void sortByParagraph() {
+    public void testTextLogicShouldSortParagraphsWhenTextSubmitted() {
         //given
         Component expected = new Composite();
         expected.add(secondParagraph);
@@ -59,7 +59,7 @@ public class TextLogicTest {
     }
 
     @Test
-    public void sortBySentence() {
+    public void testTextLogicShouldSortSentencesWhenParagraphSubmitted() {
         //given
         Component expected = new Composite();
         expected.add(firstSentence);
@@ -71,7 +71,7 @@ public class TextLogicTest {
     }
 
     @Test
-    public void sortByLexeme() {
+    public void testTextLogicShouldSortLexemesWhenSentenceSubmitted() {
         //given
         Component expected = new Composite();
         expected.add(Lexeme.word(ninthLexeme));
@@ -84,7 +84,7 @@ public class TextLogicTest {
     }
 
     @Test
-    public void calculate() {
+    public void testTextLogicShouldReturnCalculatedValueWhenCalculateRequested() {
         //given
         Calculator calculator = Mockito.mock(Calculator.class);
         when(calculator.calculate()).thenReturn("14.0");
